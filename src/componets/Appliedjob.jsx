@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { getStoredJobApplication } from "../getStorage/Getstorage";
+
 import Jobs from "./Jobs";
 
 

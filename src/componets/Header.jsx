@@ -1,7 +1,27 @@
-import { Link, NavLink } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "./Provider";
 
 
 const Header = () => {
+
+const navigate=useNavigate()
+ const {logOut,user}=useContext(AuthContext)
+
+ const SingOutUser=()=>{
+  logOut()
+  .then(()=>{
+  navigate('/login')
+  })
+  .catch(error=>console.log(error.message))
+ }
+
+ 
+
+
+
+
+
 
     const links=<>
     
@@ -9,7 +29,7 @@ const Header = () => {
     <li><NavLink to="/jobs">Jobs</NavLink></li>
     <li><NavLink to="/apply">Applied jobs</NavLink></li>
     <li><NavLink to="/blogs">Blogs</NavLink></li>
-    <li><NavLink to="/static">Stataiscs</NavLink></li>
+    <li><NavLink to="/static">Fevorits</NavLink></li>
      
     
     
@@ -34,7 +54,7 @@ const Header = () => {
        
       </ul>
     </div>
-    <a className="btn btn-ghost normal-case text-xl">Carear Hub</a>
+    <Link to='/'className="btn btn-ghost normal-case text-xl">Carear Hub</Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
@@ -42,7 +62,12 @@ const Header = () => {
     </ul>
   </div>
   <div className="navbar-end">
-   <Link className="btn bg-gradient-to-r from-cyan-500 to-blue-500" to='/'>Apply Now</Link>
+    {
+      user ?<button onClick={SingOutUser} className="btn bg-gradient-to-r from-cyan-500 to-blue-500">SING OUT</button>:
+      <Link className="btn bg-gradient-to-r from-cyan-500 to-blue-500" to='/login'>Login</Link>
+    }
+
+   
   </div>
 </div>
         </div>

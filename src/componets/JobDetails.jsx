@@ -1,7 +1,9 @@
 import { useLoaderData, useParams } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
-import { saveJobApplication } from "../getStorage/Getstorage";
+
+import Swal from "sweetalert";
+
 const JobDetails = () => {
 
  const jobId=useLoaderData()
@@ -12,8 +14,43 @@ console.log(job)
 const{job_description,job_responsibility,educational_requirements, experiences,salary,job_title,contact_information}=job;
 
 const applyJob=()=>{
-    saveJobApplication(idInt)
-    toast('You have Applied Job Succesfully')
+ 
+ const addToFaver=[];
+
+    const faverites=JSON.parse(localStorage.getItem('faver'))
+
+      if(!faverites){
+        addToFaver.push(job)
+        localStorage.setItem('faver',JSON.stringify(addToFaver))
+        Swal("Good job!", "You clicked the button!", "success")
+      }
+      else{
+
+    const isExits=faverites.find(job=>job.id===idInt)
+    console.log(isExits)
+  
+      if(!isExits){
+
+        addToFaver.push(...faverites,job)
+        localStorage.setItem('faver',JSON.stringify(addToFaver))
+      }
+      else{
+        swal("Good job!", "You clicked the button!", "error")
+      }
+
+
+
+
+      }
+
+
+
+
+
+
+
+
+   
 }
 
 
@@ -42,7 +79,7 @@ const applyJob=()=>{
         <p className=" font-bold">Phone:<span className="font-normal" >{contact_information.phone}</span></p>
         <p className=" font-bold">Phone:<span className="font-normal" >{contact_information.email}</span></p>
         <p className=" font-bold">Phone:<span className="font-normal" >{contact_information.address}</span></p>
-        <button onClick={applyJob} className="btn bg-gradient-to-r from-cyan-500 to-blue-500">Apply Now</button>
+        <button onClick={applyJob} className="btn bg-gradient-to-r from-cyan-500 to-blue-500">Add To Foverites</button>
 
        </div>
 
@@ -51,7 +88,7 @@ const applyJob=()=>{
 
 
         </div>
-        <ToastContainer/>
+       
         </div>
     );
 };

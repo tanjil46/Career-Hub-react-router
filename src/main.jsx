@@ -10,10 +10,15 @@ import {
 } from "react-router-dom";
 import Root from './componets/Root';
 import Hoom from './componets/Hoom';
-import Appliedjob from './componets/Appliedjob';
+
 import ErrorPage from './componets/ErrorPage';
 import JobDetails from './componets/JobDetails';
 import JobsCategory from './componets/JobsCategory';
+import Fover from './componets/Fover';
+import Login from './componets/Login';
+import Resisterform from './componets/Resisterform';
+import Provider from './componets/Provider';
+import Private from './componets/Private';
 
 
 
@@ -28,22 +33,33 @@ children:[
   path:'/',
   element:<Hoom></Hoom>
 },
-{
-  path:'/apply',
-  element:<Appliedjob></Appliedjob>,
-  loader:()=>fetch('jobs.json')
-},
+
+
+
+
+
 {
   path:'/job/:id',
   loader:()=>fetch('jobs.json'),
- element:<JobDetails></JobDetails>
+ element:<Private><JobDetails></JobDetails></Private>
 },
 {
   path:'/jobs',
   loader:()=>fetch('categories.json'),
   element:<JobsCategory></JobsCategory>
+},
+{
+  path:'/static',
+  element:<Fover></Fover>
+},
+{
+  path:'/login',
+  element:<Login></Login>
+},
+{
+  path:'/resis',
+  element:<Resisterform></Resisterform>
 }
-
 
 
 
@@ -77,6 +93,8 @@ children:[
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
- <RouterProvider router={router}></RouterProvider>
+<Provider>
+<RouterProvider router={router}></RouterProvider>
+</Provider>
   </React.StrictMode>,
 )
